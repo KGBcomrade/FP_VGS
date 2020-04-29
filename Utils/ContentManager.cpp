@@ -6,7 +6,7 @@
 
 
 
-sf::Texture *contentManagerLoadTexture(char *path) {
+sf::Texture *contentManagerLoadTexture(const std::string& path) {
     auto tex = new sf::Texture;
     bool res = tex->loadFromFile(path);
     return tex;

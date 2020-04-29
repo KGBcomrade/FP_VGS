@@ -18,16 +18,17 @@ int main() {
     Object playerObj = lvl.getObject("player");
     std::vector<Object> enemiesObj = lvl.getObjects("EasyEnemy");
 
-    Player player(contentManagerLoadTexture("bob.png"), "Player1", Vector2f(playerObj.rect.left, playerObj.rect.top), Vector2f(30, 30), lvl);
+    Player player(contentManagerLoadTexture("Bob.png"), "Player1", Vector2f(playerObj.rect.left, playerObj.rect.top), Vector2f(30, 30), lvl);
     std::vector<Enemy> enemies;
+    enemies.reserve(enemiesObj.size());
     for (auto &i : enemiesObj)
-        enemies.emplace_back(contentManagerLoadTexture("prep,png"), "EasyEnemy", Vector2f(playerObj.rect.left, playerObj.rect.top), Vector2f(30, 30), lvl);
+        enemies.emplace_back(contentManagerLoadTexture("prep,png"), "EasyEnemy", Vector2f(i.rect.left, i.rect.top), Vector2f(30, 30), lvl);
     Clock clock;
     while(window.isOpen()) {
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
         time = time / 800;
-        Event event;
+//        Event event{};
         player.update(time);// Player update function
         for(auto & e : enemies) {
             e.update(time);//easyEnemy update function

@@ -8,14 +8,13 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 
-using namespace std;
 
 /***
  * A simple way to load a texture
  * @param path name of texture's file
  * @return texture pointer
  */
-sf::Texture *contentManagerLoadTexture(char *path);
+sf::Texture *contentManagerLoadTexture(const std::string& path);
 
 
 
