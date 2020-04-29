@@ -269,4 +269,8 @@ void Level::draw(sf::RenderWindow &window) {
             window.draw(tile);
 }
 
+sf::Vector2i Level::getTileSize() {
+    return tileSize;
+}
+
 
