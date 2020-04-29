@@ -12,7 +12,7 @@ Entity::Entity(sf::Texture * texture, const sf::String &name, sf::Vector2f posit
     obj = level.getAllObjects();
     life = true;
     health = 1;
-    speed = .8;
+    speed = .2;
 }
 
 sf::FloatRect Entity::getRect() {
