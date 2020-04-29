@@ -12,7 +12,7 @@
 using namespace sf;
 
 class Entity {
-private:
+protected:
     std::vector<Object> obj;
     Vector2f position, velocity, size;
     float speed, moveTimer;

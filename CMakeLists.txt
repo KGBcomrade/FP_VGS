@@ -25,7 +25,7 @@ add_executable(FP2
         Entities/Entity.cpp
         Entities/Entity.h
         Utils/ContentManager.cpp
-        Utils/ContentManager.h)
+        Utils/ContentManager.h Entities/Player.cpp Entities/Player.h)
 
 target_link_libraries(FP2 sfml-graphics sfml-audio sfml-network sfml-system sfml-window)
 
