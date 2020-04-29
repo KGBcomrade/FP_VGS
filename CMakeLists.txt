@@ -15,7 +15,6 @@ add_executable(FP2
         tinyxml/tinyxml.h
         tinyxml/tinyxmlerror.cpp
         tinyxml/tinyxmlparser.cpp
-        level.h
         main.cpp
         view.h
         Entities/Entity.cpp

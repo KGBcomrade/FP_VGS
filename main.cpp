@@ -4,6 +4,7 @@
 #include <Utils/ContentManager.h>
 #include <Entities/Player.h>
 #include <Entities/Enemy.h>
+#include <iostream>
 #include "view.h" //TODO delete
 
 using namespace sf;
@@ -17,7 +18,6 @@ int main() {
     Sprite mapSprite = Sprite(*contentManagerLoadTexture("map3.png"));
     Object playerObj = lvl.getObject("player");
     std::vector<Object> enemiesObj = lvl.getObjects("EasyEnemy");
-
     Player player(contentManagerLoadTexture("Bob.png"), "Player1", Vector2f(playerObj.rect.left, playerObj.rect.top), Vector2f(30, 30), lvl);
     std::vector<Enemy> enemies;
     enemies.reserve(enemiesObj.size());

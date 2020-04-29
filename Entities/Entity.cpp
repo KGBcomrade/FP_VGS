@@ -12,6 +12,7 @@ Entity::Entity(sf::Texture * texture, const sf::String &name, sf::Vector2f posit
     obj = level.getAllObjects();
     life = true;
     health = 1;
+    speed = .8;
 }
 
 sf::FloatRect Entity::getRect() {
@@ -20,6 +21,7 @@ sf::FloatRect Entity::getRect() {
 
 void Entity::update(float dt) {
     position += velocity * dt;
+    sprite.setPosition(position);
     checkCollisionWithMap(velocity);
     if(health <=0 )
         life = false;
