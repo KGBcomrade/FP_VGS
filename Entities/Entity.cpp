@@ -15,6 +15,11 @@ FloatRect Entity::getRect() {
     return FloatRect(position, size);
 }
 
+void Entity::update(float dt) {
+    position += velocity * dt;
+
+}
+
 
 
 

@@ -23,6 +23,7 @@ private:
 public:
     Entity(Texture * texture, const String& name, Vector2f position, Vector2f size);
     FloatRect getRect();
+    virtual void update(float dt);
 };
 
 
