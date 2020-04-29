@@ -21,7 +21,12 @@ add_executable(FP2
         map.h
         Source.cpp
         stdafx.h
-        view.h)
+        view.h
+        Entities/Entity.cpp
+        Entities/Entity.h
+        Utils/ContentManager.cpp
+        Utils/ContentManager.h)
+
 target_link_libraries(FP2 sfml-graphics sfml-audio sfml-network sfml-system sfml-window)
 
 #add_library(tinyxml SHARED IMPORTED)

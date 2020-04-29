@@ -5,30 +5,11 @@
 #include "level.h"
 #include <vector>
 #include <list>
+#include "Entities/Entity.h"
 
 using namespace sf;
 ////////////////////////////////////����� ����� ��������//////////////////////////
-class Entity {
-public:
-	std::vector<Object> obj;
-	float dx, dy, x, y, speed, moveTimer;//�������� ���������� ������ ��� ������� �����
-	int w, h, health;
-	bool life, isMove, onGround;
-	Texture texture;
-	Sprite sprite;
-	String name;//����� ����� ���� ������, �� �� ����� ������ ������ ����� ��� �������������� �����.����� ���� �������� ������ �� ����� � ����� ������� ���� �������� � update � ����������� �� �����
-	Entity(Image& image, String Name, float X, float Y, int W, int H) {
-		x = X; y = Y; w = W; h = H; name = Name; moveTimer = 0;
-		speed = 0; health = 100; dx = 0; dy = 0;
-		life = true; isMove = false;
-		texture.loadFromImage(image);
-		sprite.setTexture(texture);
-		sprite.setOrigin(w / 2, h / 2);
-	}
-	FloatRect getRect() {
-		return FloatRect(x, y, w, h);
-	}
-};
+
 ////////////////////////////////////////////////////����� ������////////////////////////
 class Player :public Entity {
 	enum { left, right, up, down, jump, stay } state;//��������� ��� ������������ - ��������� �������
