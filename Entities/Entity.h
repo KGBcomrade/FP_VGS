@@ -12,7 +12,7 @@
 using namespace sf;
 
 class Entity {
-public:
+private:
     std::vector<Object> obj;
     Vector2f position, velocity, size;
     float speed, moveTimer;
@@ -20,6 +20,7 @@ public:
     bool life, isMove, onGround;
     Sprite sprite;
     String name;
+public:
     Entity(Texture * texture, const String& name, Vector2f position, Vector2f size);
     FloatRect getRect();
 };
