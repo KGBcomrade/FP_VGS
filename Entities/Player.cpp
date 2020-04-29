@@ -10,15 +10,17 @@ void Player::control() {
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 				state = left;
 			}
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
+			else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
 				state = right;
 			}
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {//���� ������ ������� ����� � �� �� �����, �� ����� �������
+			else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {//���� ������ ������� ����� � �� �� �����, �� ����� �������
 				state = up;
 			}
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
+			else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
 				state = down;
 			}
+			else
+			    state = stay;
 		}
 
 }
@@ -37,21 +39,21 @@ void Player::update(float dt){
             break;
         case up:
             velocity.x = 0;
-            velocity.y = speed;
+            velocity.y = -speed;
             break;
         case down:
             velocity.x = 0;
-            velocity.y = -speed;
+            velocity.y = speed;
             break;
         case stay:
             velocity.x = velocity.y = 0;
             break;
     }
+    state = stay;
 }
 
 Player::Player(sf::Texture *texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level &level) : Entity::Entity(texture, name, position, size, level){
     playerScore = 0;
-    state = stay;
     if(name == "Player1")
         sprite.setTextureRect(sf::IntRect(4, 19, size.x, size.y));
 }
