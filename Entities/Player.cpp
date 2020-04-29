@@ -2,20 +2,21 @@
 // Created by kgbcomrade on 4/29/20.
 //
 
+#include <SFML/Window/Keyboard.hpp>
 #include "Player.h"
 
 void Player::control() {
-    if (Keyboard::isKeyPressed) {//���� ������ �������
-			if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A)))) {
+    if (sf::Keyboard::isKeyPressed) {//���� ������ �������
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A)))) {
 				state = left;
 			}
-			if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D)))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D)))) {
 				state = right;
 			}
-			if ((Keyboard::isKeyPressed(Keyboard::Up) || (Keyboard::isKeyPressed(Keyboard::W)))) {//���� ������ ������� ����� � �� �� �����, �� ����� �������
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W)))) {//���� ������ ������� ����� � �� �� �����, �� ����� �������
 				state = up;
 			}
-			if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S)))) {
 				state = down;
 			}
 		}
@@ -48,10 +49,10 @@ void Player::update(float dt){
     }
 }
 
-Player::Player(Texture *texture, const String &name, Vector2f position, Vector2f size, Level &level) : Entity::Entity(texture, name, position, size, level){
+Player::Player(sf::Texture *texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level &level) : Entity::Entity(texture, name, position, size, level){
     playerScore = 0;
     state = stay;
     if(name == "Player1")
-        sprite.setTextureRect(IntRect(4, 19, size.x, size.y));
+        sprite.setTextureRect(sf::IntRect(4, 19, size.x, size.y));
 }
 

@@ -10,7 +10,7 @@
 
 class Enemy : public Entity{
 public:
-    Enemy(Texture * texture, const String& name, Vector2f position, Vector2f size, Level & level);
+    Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level);
 };
 
 

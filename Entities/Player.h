@@ -14,7 +14,7 @@ private:
     enum { left, right, up, down, jump, stay } state;//��������� ��� ������������ - ��������� �������
     int playerScore;
 public:
-    Player(Texture * texture, const String& name, Vector2f position, Vector2f size, Level &level);
+    Player(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level &level);
     void control();
     void update(float dt) override;
 };
