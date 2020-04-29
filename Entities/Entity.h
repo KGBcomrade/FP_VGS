@@ -24,7 +24,7 @@ public:
     Entity(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level);
     sf::FloatRect getRect();
     virtual void update(float dt);
-
+    sf::Sprite getSprite();
     void checkCollisionWithMap(sf::Vector2f dvec);
 };
 

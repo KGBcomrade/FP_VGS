@@ -53,6 +53,10 @@ void Entity::checkCollisionWithMap(sf::Vector2f dvec) {
 
 }
 
+sf::Sprite Entity::getSprite() {
+    return sprite;
+}
+
 
 
 
