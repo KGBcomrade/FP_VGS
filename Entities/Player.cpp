@@ -48,3 +48,10 @@ void Player::update(float dt){
     }
 }
 
+Player::Player(Texture *texture, const String &name, Vector2f position, Vector2f size, Level &level) : Entity::Entity(texture, name, position, size, level){
+    playerScore = 0;
+    state = stay;
+    if(name == "Player1")
+        sprite.setTextureRect(IntRect(4, 19, size.x, size.y));
+}
+

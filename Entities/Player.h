@@ -6,6 +6,7 @@
 #define FP2_PLAYER_H
 
 
+#include <Misc/Level.h>
 #include "Entity.h"
 
 class Player : public Entity {
@@ -13,6 +14,7 @@ private:
     enum { left, right, up, down, jump, stay } state;//��������� ��� ������������ - ��������� �������
     int playerScore;
 public:
+    Player(Texture * texture, const String& name, Vector2f position, Vector2f size, Level &level);
     void control();
     void update(float dt) override;
 };
