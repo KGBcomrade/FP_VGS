@@ -9,6 +9,7 @@
 #include <vector>
 #include <level.h>
 #include <Misc/Object.h>
+#include <Misc/Level.h>
 
 using namespace sf;
 
@@ -22,7 +23,7 @@ protected:
     Sprite sprite;
     String name;
 public:
-    Entity(Texture * texture, const String& name, Vector2f position, Vector2f size);
+    Entity(Texture * texture, const String& name, Vector2f position, Vector2f size, Level & level);
     FloatRect getRect();
     virtual void update(float dt);
 

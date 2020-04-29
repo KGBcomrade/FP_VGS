@@ -4,11 +4,12 @@
 
 #include "Entity.h"
 
-Entity::Entity(Texture * texture, const String &name, Vector2f position, Vector2f size)  {
+Entity::Entity(Texture * texture, const String &name, Vector2f position, Vector2f size, Level & level)  {
     this->name = name;
     this->position = position;
     this->size = size;
     sprite = Sprite(*texture);
+    obj = level.getAllObjects();
 }
 
 FloatRect Entity::getRect() {
