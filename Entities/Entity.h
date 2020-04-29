@@ -10,23 +10,22 @@
 #include <Misc/Object.h>
 #include <Misc/Level.h>
 
-using namespace sf;
 
 class Entity {
 protected:
     std::vector<Object> obj;
-    Vector2f position, velocity, size;
+    sf::Vector2f position, velocity, size;
     float speed, moveTimer;
     int health;
     bool life, isMove, onGround;
-    Sprite sprite;
-    String name;
+    sf::Sprite sprite;
+    sf::String name;
 public:
-    Entity(Texture * texture, const String& name, Vector2f position, Vector2f size, Level & level);
-    FloatRect getRect();
+    Entity(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level);
+    sf::FloatRect getRect();
     virtual void update(float dt);
 
-    void checkCollisionWithMap(Vector2f dvec);
+    void checkCollisionWithMap(sf::Vector2f dvec);
 };
 
 

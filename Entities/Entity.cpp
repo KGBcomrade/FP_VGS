@@ -4,18 +4,18 @@
 
 #include "Entity.h"
 
-Entity::Entity(Texture * texture, const String &name, Vector2f position, Vector2f size, Level & level)  {
+Entity::Entity(sf::Texture * texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level & level)  {
     this->name = name;
     this->position = position;
     this->size = size;
-    sprite = Sprite(*texture);
+    sprite = sf::Sprite(*texture);
     obj = level.getAllObjects();
     life = true;
     health = 1;
 }
 
-FloatRect Entity::getRect() {
-    return FloatRect(position, size);
+sf::FloatRect Entity::getRect() {
+    return sf::FloatRect(position, size);
 }
 
 void Entity::update(float dt) {
@@ -25,7 +25,7 @@ void Entity::update(float dt) {
         life = false;
 }
 
-void Entity::checkCollisionWithMap(Vector2f dvec) {
+void Entity::checkCollisionWithMap(sf::Vector2f dvec) {
     for (auto & i : obj) {
         if (getRect().intersects(i.rect)) {
             if (i.name == "solid") {
