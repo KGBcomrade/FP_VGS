@@ -6,7 +6,7 @@
 #include <cstdlib>
 
 int Object::GetPropertyInt(const std::string& pName) {
-    return (int) strtod(properties[pName].c_str(), nullptr);
+    return (int) strtol(properties[pName].c_str(), nullptr, 10);
 }
 
 float Object::GetPropertyFloat(const std::string& pName) {
