@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="24">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="25">
  <tileset firstgid="1" name="map3" tilewidth="32" tileheight="32" tilecount="780" columns="30">
   <image source="map3.png" width="987" height="832"/>
+  <terraintypes>
+   <terrain name="table" tile="45"/>
+   <terrain name="New Terrain" tile="45"/>
+   <terrain name="blackboard" tile="45"/>
+  </terraintypes>
+  <tile id="11" terrain=",,,2"/>
+  <tile id="12" terrain=",,2,2"/>
+  <tile id="15" terrain=",,2,"/>
+  <tile id="41" terrain=",2,,2"/>
+  <tile id="42" terrain="2,2,2,2"/>
+  <tile id="45" terrain="2,,2,"/>
+  <tile id="71" terrain=",2,,"/>
+  <tile id="72" terrain="2,2,,"/>
+  <tile id="75" terrain="2,,,"/>
+  <tile id="360" terrain=",,,1"/>
+  <tile id="361" terrain=",,1,1"/>
+  <tile id="362" terrain=",,1,"/>
+  <tile id="364" terrain="1,1,1,1"/>
+  <tile id="390" terrain=",1,,"/>
+  <tile id="391" terrain="1,1,,"/>
+  <tile id="392" terrain="1,,,"/>
+  <tile id="527" terrain=",,,0"/>
+  <tile id="528" terrain=",,0,0"/>
+  <tile id="529" terrain=",,0,"/>
+  <tile id="557" terrain=",0,,"/>
+  <tile id="558" terrain="0,0,,"/>
+  <tile id="559" terrain="0,,,"/>
+  <tile id="597" terrain="0,0,0,0"/>
  </tileset>
  <layer id="1" name="Слой тайлов 1" width="40" height="20">
   <data>
@@ -828,8 +856,9 @@
   <object id="18" name="solid" x="1016.06" y="32.7121" width="96" height="51.6667"/>
   <object id="19" name="solid" x="800.061" y="3.04544" width="476" height="30"/>
   <object id="20" name="solid" x="1248.06" y="33.7121" width="30.6667" height="580.667"/>
-  <object id="21" name="Enemy" x="431" y="512" width="30" height="30"/>
+  <object id="21" name="Enemy" x="265" y="237" width="30" height="30"/>
   <object id="22" name="Enemy" x="506" y="194" width="30" height="30"/>
   <object id="23" name="Enemy" x="1045" y="389" width="30" height="30"/>
+  <object id="24" name="Enemy" x="62" y="278" width="44" height="33"/>
  </objectgroup>
 </map>

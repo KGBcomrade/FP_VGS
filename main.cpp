@@ -17,12 +17,13 @@ int main() {
     lvl.loadFromFile("map.tmx");
     Sprite mapSprite = Sprite(*contentManagerLoadTexture("map3.png"));
     Object playerObj = lvl.getObject("player");
-    std::vector<Object> enemiesObj = lvl.getObjects("EasyEnemy");
+    std::vector<Object> enemiesObj = lvl.getObjects("Enemy");
     Player player(contentManagerLoadTexture("Bob.png"), "Player1", Vector2f(playerObj.rect.left, playerObj.rect.top), Vector2f(30, 30), lvl);
     std::vector<Enemy> enemies;
+    Texture *enemyTex = contentManagerLoadTexture("prep.png");
     enemies.reserve(enemiesObj.size());
     for (auto &i : enemiesObj)
-        enemies.emplace_back(contentManagerLoadTexture("prep,png"), "EasyEnemy", Vector2f(i.rect.left, i.rect.top), Vector2f(30, 30), lvl);
+        enemies.emplace_back(Enemy(enemyTex, "EasyEnemy", Vector2f(i.rect.left, i.rect.top), Vector2f(30, 30), lvl));
     Clock clock;
     while(window.isOpen()) {
         float time = clock.getElapsedTime().asMicroseconds();
@@ -30,10 +31,7 @@ int main() {
         time = time / 800;
 //        Event event{};
         player.update(time);// Player update function
-        for(auto & e : enemies) {
-            e.update(time);//easyEnemy update function
-            window.draw(e.getSprite());
-        }
+
         if (Keyboard::isKeyPressed(Keyboard::Escape)) {
             window.close();
         }
@@ -41,6 +39,10 @@ int main() {
         window.clear();
         lvl.draw(window);
         window.draw(player.getSprite());
+        for(auto & e : enemies) {
+            e.update(time);//easyEnemy update function
+            window.draw(e.getSprite());
+        }
         window.display();
     }
 }

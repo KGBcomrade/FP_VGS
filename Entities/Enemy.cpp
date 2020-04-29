@@ -10,8 +10,9 @@ Enemy::Enemy(sf::Texture *texture, const sf::String &name, sf::Vector2f position
                                                                                                             size,
                                                                                                             level) {
     if(name == "EasyEnemy") {
-        sprite.setTextureRect(sf::IntRect(position.x, position.y, position.x + size.x, position.y + size.y));
-        velocity = sf::Vector2f(.2, 0);
+        //sprite.setTextureRect(sf::IntRect(4, 19, size.x, size.y));
+        sprite.scale(.5, .5);
+        velocity = sf::Vector2f(0, 0);
     }
 
 }
