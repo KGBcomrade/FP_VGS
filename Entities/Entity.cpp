@@ -20,6 +20,34 @@ void Entity::update(float dt) {
 
 }
 
+void Entity::checkCollisionWithMap(Vector2f dvec) {
+    for (auto & i : obj) {
+        if (getRect().intersects(i.rect)) {
+            if (i.name == "solid") {
+                if(dvec.x > 0) {
+                    position.x = i.rect.left - size.x;
+                }
+                if(dvec.x < 0) {
+                    position.x = i.rect.left + i.rect.width;
+                }
+                if(dvec.y > 0) {
+                    position.y = i.rect.top - size.y;
+                    velocity.y = 0;
+                }
+                if(dvec.y < 0) {
+                    position.y = i.rect.top + i.rect.height;
+                    velocity.y = 0;
+                }
+			}
+//					if (Dy > 0) { y = obj[i].rect.top - h; dy = 0; }
+//					if (Dy < 0) { y = obj[i].rect.top + obj[i].rect.height; dy = 0; }
+//					if (Dx > 0) { x = obj[i].rect.left - w; }
+//					if (Dx < 0) { x = obj[i].rect.left + obj[i].rect.width; }
+		}
+    }
+
+}
+
 
 
 
