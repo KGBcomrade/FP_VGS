@@ -10,6 +10,8 @@ Entity::Entity(Texture * texture, const String &name, Vector2f position, Vector2
     this->size = size;
     sprite = Sprite(*texture);
     obj = level.getAllObjects();
+    life = true;
+    health = 1;
 }
 
 FloatRect Entity::getRect() {
@@ -18,7 +20,9 @@ FloatRect Entity::getRect() {
 
 void Entity::update(float dt) {
     position += velocity * dt;
-
+    checkCollisionWithMap(velocity);
+    if(health <=0 )
+        life = false;
 }
 
 void Entity::checkCollisionWithMap(Vector2f dvec) {
