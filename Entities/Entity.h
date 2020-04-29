@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <level.h>
+#include <Misc/Object.h>
 
 using namespace sf;
 
