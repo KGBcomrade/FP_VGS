@@ -55,6 +55,6 @@ void Player::update(float dt){
 Player::Player(sf::Texture *texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level &level) : Entity::Entity(texture, name, position, size, level){
     playerScore = 0;
     if(name == "Player1")
-        sprite.setTextureRect(sf::IntRect(4, 19, size.x, size.y));
+        sprite->setTextureRect(sf::IntRect(4, 19, size.x, size.y));
 }
 

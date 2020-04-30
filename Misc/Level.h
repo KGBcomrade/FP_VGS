@@ -17,15 +17,16 @@ class Level {
 private:
     sf::Vector2i size, tileSize;
     int firstTileID;
-    sf::Rect<float> drawingBounds;
-    sf::Texture tileSetImage;
-    std::vector<Object> objects;
-    std::vector<Layer> layers;
+    sf::Rect<float> *drawingBounds;
+    sf::Texture *tileSetImage;
+    std::vector<Object*> objects;
+    std::vector<Layer*> layers;
 public:
+    ~Level();
     bool loadFromFile(const std::string& filename);
-    Object getObject(const std::string& name);
-    std::vector<Object> getObjects(const std::string& name);
-    std::vector<Object> getAllObjects();
+    Object *getObject(const std::string& name);
+    std::vector<Object*> getObjects(const std::string& name);
+    std::vector<Object*> getAllObjects();
     void draw(sf::RenderWindow& window);
     sf::Vector2i getTileSize();
 };

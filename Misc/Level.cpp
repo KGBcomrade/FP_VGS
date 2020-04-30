@@ -17,8 +17,7 @@ bool Level::loadFromFile(const std::string& filename) {
     }
 
     // �������� � ����������� map
-    TiXmlElement* map;
-    map = levelFile.FirstChildElement("map");
+    TiXmlElement* map = levelFile.FirstChildElement("map");
 
     // ������ �����: <map version="1.0" orientation="orthogonal"
     // width="10" height="10" tilewidth="34" tileheight="34">
@@ -53,12 +52,13 @@ bool Level::loadFromFile(const std::string& filename) {
 
 
     img.createMaskFromColor(sf::Color(255, 255, 255));//��� ����� �����.������ ��� �����
-    tileSetImage.loadFromImage(img);
-    tileSetImage.setSmooth(false);//�����������
+    tileSetImage = new sf::Texture();
+    tileSetImage->loadFromImage(img);
+    tileSetImage->setSmooth(false);//�����������
 
     // �������� ���������� �������� � ����� ��������
-    size_t columns = tileSetImage.getSize().x / tileSize.x;
-    size_t rows = tileSetImage.getSize().y / tileSize.y;
+    size_t columns = tileSetImage->getSize().x / tileSize.x;
+    size_t rows = tileSetImage->getSize().y / tileSize.y;
 
     // ������ �� ��������������� ����������� (TextureRect)
     std::vector<sf::Rect<int>> subRects;
@@ -76,19 +76,18 @@ bool Level::loadFromFile(const std::string& filename) {
             subRects.push_back(rect);
         }
 
-    TiXmlElement* layerElement;
-    layerElement = map->FirstChildElement("layer");
+    TiXmlElement* layerElement = map->FirstChildElement("layer");
     while (layerElement)
     {
-        Layer layer;
+        auto *layer = new Layer;
 
         if (layerElement->Attribute("opacity") != nullptr)
         {
-            layer.opacity = (int)(strtod(layerElement->Attribute("opacity"), nullptr) * 255);
+            layer->opacity = (int)(strtod(layerElement->Attribute("opacity"), nullptr) * 255);
         }
         else
         {
-            layer.opacity = 255;
+            layer->opacity = 255;
         }
 
         TiXmlElement* layerDataElement;
@@ -120,13 +119,12 @@ bool Level::loadFromFile(const std::string& filename) {
             // ������������� TextureRect ������� �����
             if (subRectToUse >= 0)
             {
-                sf::Sprite sprite;
-                sprite.setTexture(tileSetImage);
-                sprite.setTextureRect(subRects[subRectToUse]);
-                sprite.setPosition((float) x * tileSize.x, (float) y * tileSize.y);
-                sprite.setColor(sf::Color(255, 255, 255, layer.opacity));
+                auto *sprite = new sf::Sprite(*tileSetImage);
+                sprite->setTextureRect(subRects[subRectToUse]);
+                sprite->setPosition((float) x * tileSize.x, (float) y * tileSize.y);
+                sprite->setColor(sf::Color(255, 255, 255, layer->opacity));
 
-                layer.tiles.push_back(sprite);//���������� � ���� �strtod(layerElement->Attribute("opacity"), nullptr)������ ������
+                layer->tiles.push_back(sprite);//���������� � ���� �strtod(layerElement->Attribute("opacity"), nullptr)������ ������
             }
 
             tileElement = tileElement->NextSiblingElement("tile");
@@ -178,7 +176,7 @@ bool Level::loadFromFile(const std::string& filename) {
                 int width, height;
 
                 sf::Sprite sprite;
-                sprite.setTexture(tileSetImage);
+                sprite.setTexture(*tileSetImage);
                 sprite.setTextureRect(sf::Rect<int>(0, 0, 0, 0));
                 sprite.setPosition((float)x, (float)y);
 
@@ -194,17 +192,17 @@ bool Level::loadFromFile(const std::string& filename) {
                     sprite.setTextureRect(subRects[(int) strtol(objectElement->Attribute("gid"), nullptr, 10) - firstTileID]);
                 }
 
-                Object object;
-                object.name = objectName;
-                object.type = objectType;
-                object.sprite = sprite;
+                auto *object = new Object;
+                object->name = objectName;
+                object->type = objectType;
+                object->sprite = sprite;
 
                 sf::Rect <float> objectRect;
                 objectRect.top = y;
                 objectRect.left = x;
                 objectRect.height = height;
                 objectRect.width = width;
-                object.rect = objectRect;
+                object->rect = objectRect;
 
                 TiXmlElement* properties;
                 properties = objectElement->FirstChildElement("properties");
@@ -219,7 +217,7 @@ bool Level::loadFromFile(const std::string& filename) {
                             std::string propertyName = prop->Attribute("name");
                             std::string propertyValue = prop->Attribute("value");
 
-                            object.properties[propertyName] = propertyValue;
+                            object->properties[propertyName] = propertyValue;
 
                             prop = prop->NextSiblingElement("property");
                         }
@@ -242,35 +240,45 @@ bool Level::loadFromFile(const std::string& filename) {
     return true;
 }
 
-Object Level::getObject(const std::string& name) {
+Object* Level::getObject(const std::string& name) {
     for(auto &i : objects) {
-        if(i.name == name)
+        if(i->name == name)
             return i;
     }
-    return Object();
+    return new Object();
 }
 
-std::vector<Object> Level::getObjects(const std::string& name) {
-    std::vector<Object> res;
+std::vector<Object*> Level::getObjects(const std::string& name) {
+    std::vector<Object*> res;
     for(auto &i : objects) {
-        if(i.name == name)
+        if(i->name == name)
             res.push_back(i);
     }
     return res;
 }
 
-std::vector<Object> Level::getAllObjects() {
+std::vector<Object*> Level::getAllObjects() {
     return objects;
 }
 
 void Level::draw(sf::RenderWindow &window) {
     for(auto & layer : layers)
-        for(const auto & tile : layer.tiles)
-            window.draw(tile);
+        for(const auto &tile : layer->tiles)
+            window.draw(*tile);
 }
 
 sf::Vector2i Level::getTileSize() {
     return tileSize;
+}
+
+Level::~Level() {
+    delete tileSetImage;
+    for(auto *i : objects)
+        delete i;
+    for(auto *i : layers)
+        delete i;
+
+
 }
 
 

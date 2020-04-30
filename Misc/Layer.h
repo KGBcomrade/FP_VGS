@@ -11,7 +11,7 @@
 
 struct Layer {
     int opacity;
-    std::vector<sf::Sprite> tiles;
+    std::vector<sf::Sprite*> tiles;
 };
 
 
