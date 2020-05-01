@@ -60,7 +60,6 @@ sf::Sprite *Entity::getSprite() {
 }
 
 Entity::~Entity() {
-//    delete sprite->getTexture();
     delete sprite;
 }
 

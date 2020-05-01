@@ -17,34 +17,27 @@ bool Level::loadFromFile(const std::string& filename) {
     }
 
     // �������� � ����������� map
-    TiXmlElement* map = levelFile.FirstChildElement("map");
+    TiXmlElement map = *levelFile.FirstChildElement("map");
 
     // ������ �����: <map version="1.0" orientation="orthogonal"
     // width="10" height="10" tilewidth="34" tileheight="34">
-    size.x = (int) strtol(map->Attribute("width"), nullptr, 10);//��������� �� ����� ����� �� ��������
-    size.y = (int) strtol(map->Attribute("height"), nullptr, 10);//�� ��������, ������� �������� ��� ������ �
-    tileSize.x = (int) strtol(map->Attribute("tilewidth"), nullptr, 10);//������� ���������
-    tileSize.y = (int) strtol(map->Attribute("tileheight"), nullptr, 10);
+    size.x = (int) strtol(map.Attribute("width"), nullptr, 10);//��������� �� ����� ����� �� ��������
+    size.y = (int) strtol(map.Attribute("height"), nullptr, 10);//�� ��������, ������� �������� ��� ������ �
+    tileSize.x = (int) strtol(map.Attribute("tilewidth"), nullptr, 10);//������� ���������
+    tileSize.y = (int) strtol(map.Attribute("tileheight"), nullptr, 10);
 
     // ����� �������� �������� � ������������� ������� �����
-    TiXmlElement* tileSetElement;
-    tileSetElement = map->FirstChildElement("tileset");
-    firstTileID = (int) strtol(tileSetElement->Attribute("firstgid"), nullptr, 10);
+    TiXmlElement tileSetElement = *map.FirstChildElement("tileset");
+    firstTileID = (int) strtol(tileSetElement.Attribute("firstgid"), nullptr, 10);
 
     // source - ���� �� �������� � ���������� image
-    TiXmlElement* image;
-
-    /*TiXmlElement* tile;
-    tile = tileSetElement->FirstChildElement("tile");
-    image = tile->FirstChildElement("image");*/
-
-    image = tileSetElement->FirstChildElement("image");
-    std::string imagepath = image->Attribute("source");
+    TiXmlElement image = *tileSetElement.FirstChildElement("image");
+    std::string imagePath = image.Attribute("source");
 
     // �������� ��������� �������
     sf::Image img;
 
-    if (!img.loadFromFile(imagepath))
+    if (!img.loadFromFile(imagePath))
     {
         std::cout << "Failed to load tile sheet." << std::endl;//���� �� ������� ��������� �������-������� ������ � �������
         return false;
@@ -76,7 +69,7 @@ bool Level::loadFromFile(const std::string& filename) {
             subRects.push_back(rect);
         }
 
-    TiXmlElement* layerElement = map->FirstChildElement("layer");
+    TiXmlElement* layerElement = map.FirstChildElement("layer");
     while (layerElement)
     {
         auto *layer = new Layer;
@@ -148,9 +141,9 @@ bool Level::loadFromFile(const std::string& filename) {
     TiXmlElement* objectGroupElement;
 
     // ���� ���� ���� ��������
-    if (map->FirstChildElement("objectgroup") != nullptr)
+    if (map.FirstChildElement("objectgroup") != nullptr)
     {
-        objectGroupElement = map->FirstChildElement("objectgroup");
+        objectGroupElement = map.FirstChildElement("objectgroup");
         while (objectGroupElement)
         {
             //  ��������� <object>

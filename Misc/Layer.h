@@ -12,7 +12,10 @@
 struct Layer {
     int opacity;
     std::vector<sf::Sprite*> tiles;
+    ~Layer();
 };
+
+
 
 
 #endif //FP2_LAYER_H

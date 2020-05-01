@@ -9,12 +9,16 @@
 #include <SFML/Graphics.hpp>
 
 
-/***
- * A simple way to load a texture
- * @param path name of texture's file
- * @return texture pointer
- */
-sf::Texture *contentManagerLoadTexture(const std::string& path);
+class ContentManager {
+private:
+    std::map<std::string, sf::Texture*> texMap;
+public:
+    ContentManager();
+    ~ContentManager();
+    bool loadTexture(const std::string &key, const std::string& path);
+    sf::Texture* getTexture(const std::string &key);
+
+};
 
 
 

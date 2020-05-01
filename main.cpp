@@ -13,17 +13,21 @@ int main() {
     RenderWindow window(VideoMode(640, 480), "VGSGame");
     view.reset(FloatRect(0, 0, 640, 480));
 
+    ContentManager contentManager;
+    contentManager.loadTexture("player", "Bob.png");
+    contentManager.loadTexture("enemy", "prep.png");
+    contentManager.loadTexture("mapTexture", "map3.png");
+
     Level lvl;
     lvl.loadFromFile("map.tmx");
-    Sprite mapSprite = Sprite(*contentManagerLoadTexture("map3.png"));
+    Sprite mapSprite = Sprite(*contentManager.getTexture("mapTexture"));
     auto *playerObj = lvl.getObject("player");
     std::vector<Object*> enemiesObj = lvl.getObjects("Enemy");
-    Player player(contentManagerLoadTexture("Bob.png"), "Player1", Vector2f(playerObj->rect.left, playerObj->rect.top), Vector2f(30, 30), lvl);
+    Player player(contentManager.getTexture("player"), "Player1", Vector2f(playerObj->rect.left, playerObj->rect.top), Vector2f(30, 30), lvl);
     std::vector<Enemy> enemies;
-    Texture *enemyTex = contentManagerLoadTexture("prep.png");
     enemies.reserve(enemiesObj.size());
-    for (auto &i : enemiesObj)
-        enemies.emplace_back(Enemy(enemyTex, "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(30, 30), lvl));
+    for (auto & i : enemiesObj)
+        enemies.emplace_back(contentManager.getTexture("enemy"), "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(30, 30), lvl);
     Clock clock;
 
     while(window.isOpen()) {
@@ -32,7 +36,8 @@ int main() {
         time = time / 800;
 //        Event event{};
         player.update(time);// Player update function
-
+        for(auto &e : enemies)
+            e.update(time);//easyEnemy update function
         if (Keyboard::isKeyPressed(Keyboard::Escape)) {
             window.close();
         }
@@ -41,13 +46,10 @@ int main() {
         lvl.draw(window);
         window.draw(*player.getSprite());
         for(auto & e : enemies) {
-            e.update(time);//easyEnemy update function
-            if(e.getSprite() != nullptr)
-                window.draw(*e.getSprite());
+            window.draw(*e.getSprite());
         }
         window.display();
     }
-    delete enemyTex;
 }
 
 
