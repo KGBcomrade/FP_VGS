@@ -7,10 +7,14 @@
 
 
 #include "Entity.h"
+#include "Player.h"
 
 class Enemy : public Entity{
+protected:
+    Player *player;
 public:
-    Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level);
+    Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level, Player *player);
+    void update(float dt) override;
 };
 
 

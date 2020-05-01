@@ -27,7 +27,7 @@ int main() {
     std::vector<Enemy> enemies;
     enemies.reserve(enemiesObj.size());
     for (auto & i : enemiesObj)
-        enemies.emplace_back(contentManager.getTexture("enemy"), "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(30, 30), lvl);
+        enemies.emplace_back(contentManager.getTexture("enemy"), "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(75, 100), lvl, &player);
     Clock clock;
 
     while(window.isOpen()) {
