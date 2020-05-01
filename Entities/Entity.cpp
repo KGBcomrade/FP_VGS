@@ -63,6 +63,10 @@ Entity::~Entity() {
     delete sprite;
 }
 
+sf::Vector2f Entity::getPosition(){
+    return position;
+}
+
 
 
 

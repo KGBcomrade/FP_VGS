@@ -15,6 +15,7 @@ class Entity {
 protected:
     std::vector<Object*> obj;
     sf::Vector2f position, velocity, size;
+
     float speed, moveTimer;
     int health;
     bool life, isMove, onGround;
@@ -26,7 +27,9 @@ public:
     sf::FloatRect getRect();
     virtual void update(float dt);
     sf::Sprite *getSprite();
-    void checkCollisionWithMap(sf::Vector2f dvec);
+    void checkCollisionWithMap();
+
+    sf::Vector2f getPosition();
 };
 
 

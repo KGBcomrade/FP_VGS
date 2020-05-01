@@ -42,10 +42,8 @@ int main() {
         player.update(time);// Player update function
         for(auto &e : enemies)
             e.update(time);//easyEnemy update function
-        if (Keyboard::isKeyPressed(Keyboard::Escape)) {
-            window.close();
-        }
-        view.setCenter(player.getSprite()->getPosition());
+
+        view.setCenter(player.getPosition());
         window.setView(view);
         window.clear();
         lvl.draw(window);

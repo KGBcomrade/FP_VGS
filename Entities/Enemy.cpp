@@ -21,8 +21,12 @@ Enemy::Enemy(sf::Texture *texture, const sf::String &name, sf::Vector2f position
 
 void Enemy::update(float dt) {
     sf::Vector2f distance = player->getPosition() - position;
-    if(vectorLen(distance) > 50)
-        velocity = distance * speed / vectorLen(distance);
+    if(vectorLen(distance) > 30)
+        if(distance.x != 0)
+            velocity = sf::Vector2f(speed * (distance.x > 0 ? 1. : -1.), 0);
+        else
+            velocity = sf::Vector2f(0, speed * (distance.y > 0 ? 1. : -1.));
+
     else
         velocity = sf::Vector2f(0, 0);
     Entity::update(dt);
