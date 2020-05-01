@@ -34,7 +34,11 @@ int main() {
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
         time = time / 800;
-//        Event event{};
+        Event event{};
+        while(window.pollEvent(event)) {
+            if(event.type == Event::Closed)
+                window.close();
+        }
         player.update(time);// Player update function
         for(auto &e : enemies)
             e.update(time);//easyEnemy update function
