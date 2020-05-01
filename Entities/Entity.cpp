@@ -22,26 +22,26 @@ sf::FloatRect Entity::getRect() {
 void Entity::update(float dt) {
     position += velocity * dt;
     sprite->setPosition(position);
-    checkCollisionWithMap(velocity);
+    checkCollisionWithMap();
     if(health <=0 )
         life = false;
 }
 
-void Entity::checkCollisionWithMap(sf::Vector2f dvec) {
+void Entity::checkCollisionWithMap() {
     for (auto & i : obj) {
         if (getRect().intersects(i->rect)) {
             if (i->name == "solid") {
-                if(dvec.x > 0) {
+                if(velocity.x > 0) {
                     position.x = i->rect.left - size.x;
                 }
-                if(dvec.x < 0) {
+                if(velocity.x < 0) {
                     position.x = i->rect.left + i->rect.width;
                 }
-                if(dvec.y > 0) {
+                if(velocity.y > 0) {
                     position.y = i->rect.top - size.y;
                     velocity.y = 0;
                 }
-                if(dvec.y < 0) {
+                if(velocity.y < 0) {
                     position.y = i->rect.top + i->rect.height;
                     velocity.y = 0;
                 }
