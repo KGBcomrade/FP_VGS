@@ -73,7 +73,7 @@ bool Level::loadFromFile(const std::string& filename) {
     while (layerElement)
     {
         auto *layer = new Layer;
-
+        bool mainLayer = strcmp(layerElement->Attribute("name"), "Main Layer") == 0;
         if (layerElement->Attribute("opacity") != nullptr)
         {
             layer->opacity = (int)(strtod(layerElement->Attribute("opacity"), nullptr) * 255);
@@ -107,7 +107,14 @@ bool Level::loadFromFile(const std::string& filename) {
         while (tileElement)
         {
             if(tileElement->Attribute("gid") == nullptr) {
-                tileElement = tileElement->NextSiblingElement("tile");
+                tileElement = tileElement->NextSiblingElement("tile");x++;
+                if (x >= size.x)
+                {
+                    x = 0;
+                    y++;
+                    if (y >= size.y)
+                        y = 0;
+                }
                 continue;
             }
             int tileGID = (int) strtol(tileElement->Attribute("gid"), nullptr, 10);
@@ -122,6 +129,13 @@ bool Level::loadFromFile(const std::string& filename) {
                 sprite->setColor(sf::Color(255, 255, 255, layer->opacity));
 
                 layer->tiles.push_back(sprite);//���������� � ���� �strtod(layerElement->Attribute("opacity"), nullptr)������ ������
+
+                if (mainLayer) {
+                    auto *solidTile = new Object;
+                    solidTile->name = "solid";
+                    solidTile->rect = sf::FloatRect((float) (x * tileSize.x), (float)(y * tileSize.y), (float) tileSize.x, (float) tileSize.y);
+                    objects.push_back(solidTile);
+                }
             }
 
             tileElement = tileElement->NextSiblingElement("tile");
@@ -183,11 +197,14 @@ bool Level::loadFromFile(const std::string& filename) {
                     width = (int) strtol(objectElement->Attribute("width"), nullptr, 10);
                     height = (int) strtol(objectElement->Attribute("height"), nullptr, 10);
                 }
-                else
+                else if(objectElement->Attribute("gid") != nullptr)
                 {
                     width = subRects[(int) strtol(objectElement->Attribute("gid"), nullptr, 10) - firstTileID].width;
                     height = subRects[(int) strtol(objectElement->Attribute("gid"), nullptr, 10) - firstTileID].height;
                     sprite.setTextureRect(subRects[(int) strtol(objectElement->Attribute("gid"), nullptr, 10) - firstTileID]);
+                }
+                else {
+                    width = height = 0;
                 }
 
                 auto *object = new Object;

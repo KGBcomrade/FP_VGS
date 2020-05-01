@@ -5,11 +5,11 @@
 #include <Entities/Player.h>
 #include <Entities/Enemy.h>
 #include <iostream>
-#include "view.h" //TODO delete
 
 using namespace sf;
 
 int main() {
+    View view;
     RenderWindow window(VideoMode(640, 480), "VGSGame");
     view.reset(FloatRect(0, 0, 640, 480));
 
@@ -41,6 +41,7 @@ int main() {
         if (Keyboard::isKeyPressed(Keyboard::Escape)) {
             window.close();
         }
+        view.setCenter(player.getSprite()->getPosition());
         window.setView(view);
         window.clear();
         lvl.draw(window);
