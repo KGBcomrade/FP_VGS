@@ -19,7 +19,7 @@ int main() {
     contentManager.loadTexture("mapTexture", "map3.png");
 
     Level lvl;
-    lvl.loadFromFile("map.tmx");
+    lvl.loadFromFile("map3.tmx");
     Sprite mapSprite = Sprite(*contentManager.getTexture("mapTexture"));
     auto *playerObj = lvl.getObject("player");
     std::vector<Object*> enemiesObj = lvl.getObjects("Enemy");

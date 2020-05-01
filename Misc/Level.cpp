@@ -106,6 +106,10 @@ bool Level::loadFromFile(const std::string& filename) {
 
         while (tileElement)
         {
+            if(tileElement->Attribute("gid") == nullptr) {
+                tileElement = tileElement->NextSiblingElement("tile");
+                continue;
+            }
             int tileGID = (int) strtol(tileElement->Attribute("gid"), nullptr, 10);
             int subRectToUse = tileGID - firstTileID;
 
@@ -152,6 +156,7 @@ bool Level::loadFromFile(const std::string& filename) {
 
             while (objectElement)
             {
+
                 // �������� ��� ������ - ���, ���, �������, � ��
                 std::string objectType;
                 if (objectElement->Attribute("type") != nullptr)

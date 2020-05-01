@@ -6,6 +6,7 @@
    <terrain name="table" tile="45"/>
    <terrain name="New Terrain" tile="45"/>
    <terrain name="blackboard" tile="45"/>
+   <terrain name="bricks" tile="-1"/>
   </terraintypes>
   <tile id="11" terrain=",,,2"/>
   <tile id="12" terrain=",,2,2"/>
@@ -16,6 +17,15 @@
   <tile id="71" terrain=",2,,"/>
   <tile id="72" terrain="2,2,,"/>
   <tile id="75" terrain="2,,,"/>
+  <tile id="150" terrain=",,,3"/>
+  <tile id="151" terrain=",,3,3"/>
+  <tile id="152" terrain=",,3,"/>
+  <tile id="180" terrain=",3,,3"/>
+  <tile id="181" terrain="3,3,3,3"/>
+  <tile id="182" terrain="3,,3,"/>
+  <tile id="210" terrain=",3,,"/>
+  <tile id="211" terrain="3,3,,"/>
+  <tile id="212" terrain="3,,,"/>
   <tile id="360" terrain=",,,1"/>
   <tile id="361" terrain=",,1,1"/>
   <tile id="362" terrain=",,1,"/>
