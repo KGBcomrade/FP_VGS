@@ -10,6 +10,7 @@
 
 #endif //FP2_UTILS_H
 
-float vectorLen(sf::Vector2f vector) {
+template <typename T>
+float vectorLen(sf::Vector2<T> vector) {
     return std::sqrt(vector.x * vector.x + vector.y * vector.y);
 }
