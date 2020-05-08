@@ -25,17 +25,18 @@ void Enemy::update(float dt) {
     if(!nodeStack.empty()) {
 
         sf::Vector2f currentGoal = nodeStack.top(), distance = currentGoal - position;
-        if(vectorLen(distance) < 0.1)
-            distance *= 0.0f;
-        if(distance.x != 0 && std::abs(distance.x) > std::abs(distance.y))
+
+        if(vectorLen(distance) < .1) {
+            position = currentGoal;
+            nodeStack.pop();
+            velocity *= 0.0f;
+        }
+        else if(distance.x != 0 && std::abs(distance.x) > std::abs(distance.y))
             velocity = sf::Vector2f(speed * (distance.x > 0 ? 1. : -1.), 0);
         else if(distance.y != 0)
             velocity = sf::Vector2f(0, speed * (distance.y > 0 ? 1. : -1.));
 
-        else {
-            nodeStack.pop();
-            velocity *= 0.0f;
-        }
+
     }
     Entity::update(dt);
 
@@ -43,6 +44,9 @@ void Enemy::update(float dt) {
 
 void Enemy::setNodeStack(std::stack<sf::Vector2f> stack) {
     nodeStack = std::move(stack);
+}
 
+sf::Vector2f Enemy::getCurrentGoal() {
+    return nodeStack.empty() ? position : nodeStack.top();
 }
 

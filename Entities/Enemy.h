@@ -17,6 +17,7 @@ public:
     Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level, Player* player1);
     void setNodeStack(std::stack<sf::Vector2f> stack);
     void update(float dt) override;
+    sf::Vector2f getCurrentGoal();
 };
 
 

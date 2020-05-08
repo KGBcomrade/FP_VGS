@@ -38,7 +38,12 @@ public:
     Grid();
     Grid(size_t width, size_t height, sf::Vector2i tileSize);
     void setObstacle(size_t x, size_t y);
-    void setPlayerPosition(sf::Vector2f position);
+    /***
+     * Update player's position in the grid
+     * @param position player's position in the world (not in the grid)
+     * @return true if position is different from previous one
+     */
+    bool setPlayerPosition(sf::Vector2f position);
     std::stack<sf::Vector2f> findPath(sf::Vector2f position);
 };
 

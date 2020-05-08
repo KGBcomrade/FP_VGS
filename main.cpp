@@ -11,8 +11,6 @@ using namespace sf;
 int main() {
     View view;
     RenderWindow window(VideoMode(640, 480), "VGSGame");
-    view.reset(FloatRect(0, 0, 1000, 1000));
-    view.zoom(10);
 
     ContentManager contentManager;
     contentManager.loadTexture("player", "Bob.png");
@@ -44,11 +42,16 @@ int main() {
                 window.close();
         }
         player.update(time);// Player update function
-        for(auto &e : enemies)
+        bool updatePaths = lvl.grid.setPlayerPosition(player.getPosition());
+        for(auto &e : enemies) {
+            if(updatePaths)
+                e.setNodeStack(lvl.grid.findPath(e.getCurrentGoal()));
             e.update(time);//easyEnemy update function
+        }
 
         view.setCenter(player.getPosition());
         view.setSize((Vector2f) window.getSize());
+//        view.zoom(.5);
         window.setView(view);
         window.clear();
         lvl.draw(window);

@@ -18,8 +18,12 @@ void Grid::setObstacle(size_t x, size_t y) {
     grid[x][y] = true;
 }
 
-void Grid::setPlayerPosition(sf::Vector2f position) {
-    playerPosition = sf::Vector2i(position.x / tileSize.x, position.y / tileSize.y);
+bool Grid::setPlayerPosition(sf::Vector2f position) {
+    auto newPlayerPosition = sf::Vector2i(position.x / tileSize.x, position.y / tileSize.y);
+    if(newPlayerPosition == playerPosition)
+        return false;
+    playerPosition = newPlayerPosition;
+    return true;
 }
 
 std::stack<sf::Vector2f> Grid::findPath(sf::Vector2f position) {
