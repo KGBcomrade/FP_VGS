@@ -30,7 +30,7 @@ std::stack<sf::Vector2f> Grid::findPath(sf::Vector2f position) {
     std::vector<std::vector<Node*>> nodes(mapWidth, std::vector<Node*>(mapHeight));
     for(size_t x = 0; x < mapWidth; x++)
         for(size_t y = 0; y < mapHeight; y++) {
-            nodes[x][y] = new Node(sf::Vector2i(x, y), abs(playerPosition.x - (int)x) + abs(playerPosition.y - (int)y), grid[x][y]);
+            nodes[x][y] = new Node(sf::Vector2i(x, y), vectorLen(playerPosition - sf::Vector2i(x, y)), grid[x][y]);
         }
 
     Node* start = nodes[position.x / tileSize.x][position.y / tileSize.y];
@@ -96,7 +96,7 @@ Grid::Grid() : Grid::Grid(0, 0, sf::Vector2i(0, 0)) {
 
 }
 
-Grid::Node::Node(sf::Vector2i coordinates, int hScore, bool obstacle) {
+Grid::Node::Node(sf::Vector2i coordinates, float hScore, bool obstacle) {
     this->coordinates = coordinates;
     this->hScore = hScore;
     this->obstacle = obstacle;
@@ -110,7 +110,7 @@ void Grid::Node::optimize(Grid::Node *prevCandidate) {
         gScore = 0;
         return;
     }
-    int newGScore = prevCandidate->gScore + (int) vectorLen<int>(coordinates - prevCandidate->coordinates);
+    float newGScore = prevCandidate->gScore + vectorLen<int>(coordinates - prevCandidate->coordinates);
     if (newGScore < gScore) {
         gScore = newGScore;
         this->prev = prevCandidate;
@@ -118,7 +118,7 @@ void Grid::Node::optimize(Grid::Node *prevCandidate) {
 
 }
 
-int Grid::Node::getFScore() {
+float Grid::Node::getFScore() {
     return gScore + hScore;
 }
 

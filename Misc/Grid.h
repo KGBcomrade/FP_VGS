@@ -19,15 +19,15 @@ private:
     class Node {
     private:
         sf::Vector2i coordinates;
-        int gScore, hScore;
+        float gScore, hScore;
         Node* prev;
         bool obstacle;
     public:
 
         bool checked;
-        Node(sf::Vector2i coordinates, int hScore, bool obstacle);
+        Node(sf::Vector2i coordinates, float hScore, bool obstacle);
         void optimize(Node* prevCandidate);
-        int getFScore();
+        float getFScore();
         Node* getPrev();
         sf::Vector2i getCoordinates();
         bool isObstacle();
