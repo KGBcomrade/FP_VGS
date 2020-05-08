@@ -12,6 +12,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Object.h"
 #include "Layer.h"
+#include "Grid.h"
 
 class Level {
 private:
@@ -23,12 +24,13 @@ private:
     std::vector<Layer*> layers;
 public:
     ~Level();
-    bool loadFromFile(const std::string& filename);
+    Level(const std::string& filename);
     Object *getObject(const std::string& name);
     std::vector<Object*> getObjects(const std::string& name);
     std::vector<Object*> getAllObjects();
     void draw(sf::RenderWindow& window);
     sf::Vector2i getTileSize();
+    Grid grid;
 };
 
 

@@ -6,14 +6,13 @@
 #include <iostream>
 #include "Level.h"
 
-bool Level::loadFromFile(const std::string& filename) {
+Level::Level(const std::string& filename) {
     TiXmlDocument levelFile(filename.c_str());//��������� ���� � TiXmlDocument
-
     // ��������� XML-�����
     if (!levelFile.LoadFile())//���� �� ������� ��������� �����
     {
         std::cout << "Loading level \"" << filename << "\" failed." << std::endl;//������ ������
-        return false;
+        throw std::runtime_error("Failed loading level");
     }
 
     // �������� � ����������� map
@@ -25,6 +24,9 @@ bool Level::loadFromFile(const std::string& filename) {
     size.y = (int) strtol(map.Attribute("height"), nullptr, 10);//�� ��������, ������� �������� ��� ������ �
     tileSize.x = (int) strtol(map.Attribute("tilewidth"), nullptr, 10);//������� ���������
     tileSize.y = (int) strtol(map.Attribute("tileheight"), nullptr, 10);
+
+
+    grid = Grid(size.x, size.y, tileSize);
 
     // ����� �������� �������� � ������������� ������� �����
     TiXmlElement tileSetElement = *map.FirstChildElement("tileset");
@@ -40,7 +42,7 @@ bool Level::loadFromFile(const std::string& filename) {
     if (!img.loadFromFile(imagePath))
     {
         std::cout << "Failed to load tile sheet." << std::endl;//���� �� ������� ��������� �������-������� ������ � �������
-        return false;
+        throw std::runtime_error("Failed loading level");
     }
 
 
@@ -89,7 +91,7 @@ bool Level::loadFromFile(const std::string& filename) {
         if (layerDataElement == nullptr)
         {
             std::cout << "Bad map. No layer information found." << std::endl;
-            return false;
+            throw std::runtime_error("Failed loading level");
         }
 
         TiXmlElement* tileElement;
@@ -98,7 +100,7 @@ bool Level::loadFromFile(const std::string& filename) {
         if (tileElement == nullptr)
         {
             std::cout << "Bad map. No tile information found." << std::endl;
-            return false;
+            throw std::runtime_error("Failed loading level");
         }
 
         int x = 0;
@@ -135,6 +137,8 @@ bool Level::loadFromFile(const std::string& filename) {
                     solidTile->name = "solid";
                     solidTile->rect = sf::FloatRect((float) (x * tileSize.x), (float)(y * tileSize.y), (float) tileSize.x, (float) tileSize.y);
                     objects.push_back(solidTile);
+
+                    grid.setObstacle(x, y);
                 }
             }
 
@@ -252,7 +256,6 @@ bool Level::loadFromFile(const std::string& filename) {
         std::cout << "No object layers found..." << std::endl;
     }
 
-    return true;
 }
 
 Object* Level::getObject(const std::string& name) {
@@ -295,5 +298,7 @@ Level::~Level() {
 
 
 }
+
+
 
 

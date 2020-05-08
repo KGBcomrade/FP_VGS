@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="16">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="17">
  <tileset firstgid="1" name="map3" tilewidth="32" tileheight="32" tilecount="780" columns="30">
   <image source="map3.png" width="987" height="832"/>
   <terraintypes>
@@ -14166,9 +14166,9 @@
    <tile/>
    <tile/>
    <tile gid="182"/>
-   <tile gid="542"/>
-   <tile gid="542"/>
-   <tile gid="542"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>

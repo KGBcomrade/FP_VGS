@@ -11,15 +11,15 @@ using namespace sf;
 int main() {
     View view;
     RenderWindow window(VideoMode(640, 480), "VGSGame");
-    view.reset(FloatRect(0, 0, 640, 480));
+    view.reset(FloatRect(0, 0, 1000, 1000));
+    view.zoom(10);
 
     ContentManager contentManager;
     contentManager.loadTexture("player", "Bob.png");
     contentManager.loadTexture("enemy", "prep.png");
     contentManager.loadTexture("mapTexture", "map3.png");
 
-    Level lvl;
-    lvl.loadFromFile("map3.tmx");
+    Level lvl("map3.tmx");
     Sprite mapSprite = Sprite(*contentManager.getTexture("mapTexture"));
     auto *playerObj = lvl.getObject("player");
     std::vector<Object*> enemiesObj = lvl.getObjects("Enemy");
@@ -27,8 +27,12 @@ int main() {
     std::vector<Enemy> enemies;
     enemies.reserve(enemiesObj.size());
     for (auto & i : enemiesObj)
-        enemies.emplace_back(contentManager.getTexture("enemy"), "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(75, 100), lvl, &player);
+        enemies.emplace_back(contentManager.getTexture("enemy"), "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(30, 30), lvl, &player);
     Clock clock;
+    lvl.grid.setPlayerPosition(player.getPosition());
+    for(auto &i : enemies) {
+        i.setNodeStack(lvl.grid.findPath(i.getPosition()));
+    }
 
     while(window.isOpen()) {
         float time = clock.getElapsedTime().asMicroseconds();
@@ -44,6 +48,7 @@ int main() {
             e.update(time);//easyEnemy update function
 
         view.setCenter(player.getPosition());
+        view.setSize((Vector2f) window.getSize());
         window.setView(view);
         window.clear();
         lvl.draw(window);

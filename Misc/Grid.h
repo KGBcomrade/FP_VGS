@@ -19,14 +19,15 @@ private:
     class Node {
     private:
         sf::Vector2i coordinates;
-        float gScore, hScore;
+        int gScore, hScore;
         Node* prev;
         bool obstacle;
     public:
+
         bool checked;
-        Node(sf::Vector2i coordinates, float hScore, bool obstacle);
+        Node(sf::Vector2i coordinates, int hScore, bool obstacle);
         void optimize(Node* prevCandidate);
-        float getFScore();
+        int getFScore();
         Node* getPrev();
         sf::Vector2i getCoordinates();
         bool isObstacle();
@@ -34,6 +35,7 @@ private:
 
 
 public:
+    Grid();
     Grid(size_t width, size_t height, sf::Vector2i tileSize);
     void setObstacle(size_t x, size_t y);
     void setPlayerPosition(sf::Vector2f position);
