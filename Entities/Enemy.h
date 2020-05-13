@@ -13,11 +13,16 @@ class Enemy : public Entity{
 protected:
     std::stack<sf::Vector2f> nodeStack;
     Player *player;
+    bool checked;
+    std::string type;
 public:
-    Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level, Player* player1);
+    Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level, Player* player1, std::string type1);
+    std::string getType();
     void setNodeStack(std::stack<sf::Vector2f> stack);
     void update(float dt) override;
     sf::Vector2f getCurrentGoal();
+    void setChecked();
+    bool isChecked();
 };
 
 

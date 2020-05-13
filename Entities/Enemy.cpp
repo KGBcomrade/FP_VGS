@@ -8,16 +8,19 @@
 #include <iostream>
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Texture *texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level &level, Player* player1) : Entity(texture,
+Enemy::Enemy(sf::Texture *texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level &level, Player* player1, std::string type1) : Entity(texture,
                                                                                                             name,
                                                                                                             position,
                                                                                                             size,
                                                                                                             level) {
+    type = std::move(type1);
     player = player1;
     if(name == "EasyEnemy") {
         //sprite.setTextureRect(sf::IntRect(4, 19, size.x, size.y));
         velocity = sf::Vector2f(0, 0);
     }
+    checked = false;
+    speed = .1;
 
 }
 
@@ -38,6 +41,7 @@ void Enemy::update(float dt) {
 
 
     }
+
     Entity::update(dt);
 
 }
@@ -48,5 +52,17 @@ void Enemy::setNodeStack(std::stack<sf::Vector2f> stack) {
 
 sf::Vector2f Enemy::getCurrentGoal() {
     return nodeStack.empty() ? position : nodeStack.top();
+}
+
+void Enemy::setChecked() {
+    checked = true;
+}
+
+bool Enemy::isChecked() {
+    return checked;
+}
+
+std::string Enemy::getType() {
+    return type;
 }
 
