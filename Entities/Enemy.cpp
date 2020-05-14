@@ -15,6 +15,7 @@ Enemy::Enemy(sf::Texture *texture, const sf::String &name, sf::Vector2f position
                                                                                                             level) {
     type = std::move(type1);
     player = player1;
+    triggered = false;
     if(name == "EasyEnemy") {
         //sprite.setTextureRect(sf::IntRect(4, 19, size.x, size.y));
         velocity = sf::Vector2f(0, 0);
@@ -29,7 +30,7 @@ void Enemy::update(float dt) {
 
         sf::Vector2f currentGoal = nodeStack.top(), distance = currentGoal - position;
 
-        if(vectorLen(distance) < .1) {
+        if(vectorLen(distance) < .3) {
             position = currentGoal;
             nodeStack.pop();
             velocity *= 0.0f;
@@ -41,6 +42,9 @@ void Enemy::update(float dt) {
 
 
     }
+
+    if(vectorLen(player->getPosition() - position) < 160 && !triggered)
+        triggered = true;
 
     Entity::update(dt);
 
@@ -64,5 +68,9 @@ bool Enemy::isChecked() {
 
 std::string Enemy::getType() {
     return type;
+}
+
+bool Enemy::isTriggered() {
+    return triggered;
 }
 

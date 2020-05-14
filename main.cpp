@@ -96,9 +96,7 @@ int main() {
 
 
     Clock clock;
-    lvl.grid.setPlayerPosition(player.getPosition());
-    for(auto &i : enemies)
-        i.setNodeStack(lvl.grid.findPath(i.getPosition()));
+
 
     //interface elements
     sf::Sprite crystalSprite(*contentManager.getTexture("crystal"));
@@ -111,6 +109,7 @@ int main() {
     scoreDisplay.setOutlineColor(sf::Color::Black);
     scoreDisplay.setOutlineThickness(.8);
     scoreDisplay.setFillColor(sf::Color::White);
+
 
     while(window.isOpen()) {
         float time = clock.getElapsedTime().asMicroseconds();
@@ -139,7 +138,7 @@ int main() {
         for(auto &e : enemies) {
             if(e.isChecked())
                 continue;
-            if(updatePaths)
+            if(updatePaths && e.isTriggered())
                 e.setNodeStack(lvl.grid.findPath(e.getCurrentGoal()));
             e.update(time);//easyEnemy update function
             if(player.getRect().intersects(e.getRect())) {
@@ -167,7 +166,6 @@ int main() {
                 delete *c;
                 crystals.erase(c);
                 player.incrementScore();
-                clock.restart();
             }
         }
 
@@ -188,6 +186,8 @@ int main() {
 
         window.display();
     }
+
+    return 0;
 }
 
 

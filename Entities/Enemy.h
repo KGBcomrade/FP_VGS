@@ -13,7 +13,7 @@ class Enemy : public Entity{
 protected:
     std::stack<sf::Vector2f> nodeStack;
     Player *player;
-    bool checked;
+    bool checked, triggered;
     std::string type;
 public:
     Enemy(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level & level, Player* player1, std::string type1);
@@ -23,6 +23,7 @@ public:
     sf::Vector2f getCurrentGoal();
     void setChecked();
     bool isChecked();
+    bool isTriggered();
 };
 
 
