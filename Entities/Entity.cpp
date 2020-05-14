@@ -9,8 +9,8 @@ Entity::Entity(sf::Texture * texture, const sf::String &name, sf::Vector2f posit
     this->position = position;
     this->size = size;
     sprite = new sf::Sprite(*texture);
+    sprite->setPosition(position);
     obj = level.getAllObjects();
-    life = true;
     health = 1;
     speed = .2;
 }
@@ -23,8 +23,6 @@ void Entity::update(float dt) {
     position += velocity * dt;
     sprite->setPosition(position);
     checkCollisionWithMap();
-    if(health <=0 )
-        life = false;
 }
 
 void Entity::checkCollisionWithMap() {

@@ -18,8 +18,8 @@ std::string RandomKey(std::map<std::string, int> a) {
 
 
 
-void RandomQuestions(std::map<std::string, int> a) {
-    int b;
+int RandomQuestions(std::map<std::string, int> a) {
+    int b, res = 0;
     for (int i = 0; i < 3; i++) {
         std::string key = RandomKey(a);
         std::cout << key + "\n";
@@ -28,9 +28,11 @@ void RandomQuestions(std::map<std::string, int> a) {
             std::cout << "GOOD\n";
         }
         else {
+            res++;
             std::cout << "BAD\n";
         }
     }
+    return res;
 }
 int main() {
     setlocale(LC_ALL, "Russian");
@@ -41,6 +43,8 @@ int main() {
     contentManager.loadTexture("player", "Bob.png");
     contentManager.loadTexture("enemy", "prep.png");
     contentManager.loadTexture("mapTexture", "map3.png");
+    contentManager.loadTexture("heart", "heart.png");
+    contentManager.loadTexture("crystal", "crystal.png");
 
     std::map<std::string, int> m = {
             {"Чему равен объем тетраэдра с площадью основания 6 и высотой 4 ", 8 },
@@ -72,12 +76,21 @@ int main() {
     Level lvl("map3.tmx");
     Sprite mapSprite = Sprite(*contentManager.getTexture("mapTexture"));
     auto *playerObj = lvl.getObject("player");
-    std::vector<Object*> enemiesObj = lvl.getObjects("Enemy");
+    std::vector<Object*> enemiesObj = lvl.getObjects("Enemy"), crystalObjs = lvl.getObjects("Crystal");
     Player player(contentManager.getTexture("player"), "Player1", Vector2f(playerObj->rect.left, playerObj->rect.top), Vector2f(32, 32), lvl);
     std::vector<Enemy> enemies;
     enemies.reserve(enemiesObj.size());
     for (auto & i : enemiesObj)
         enemies.emplace_back(contentManager.getTexture("enemy"), "EasyEnemy", Vector2f(i->rect.left, i->rect.top), Vector2f(32, 32), lvl, &player, i->type);
+
+    std::vector<Entity*> crystals;
+    crystals.reserve(crystalObjs.size());
+
+    for(auto & i : crystalObjs)
+        crystals.emplace_back(new Entity(contentManager.getTexture("crystal"), "Crystal", Vector2f(i->rect.left, i->rect.top), Vector2f(20, 32), lvl));
+    int maxScore = crystals.size();
+
+
     Clock clock;
     lvl.grid.setPlayerPosition(player.getPosition());
     for(auto &i : enemies)
@@ -92,6 +105,19 @@ int main() {
             if(event.type == Event::Closed)
                 window.close();
         }
+
+        if(!player.isAlive()) {
+            window.close();
+            std::cout << "You lose!" << std::endl;
+            break;
+        }
+
+        if(player.getScore() == maxScore) {
+            window.close();
+            std::cout << "You won!" << std::endl;
+            break;
+        }
+
         player.update(time);// Player update function
         bool updatePaths = lvl.grid.setPlayerPosition(player.getPosition());
         for(auto &e : enemies) {
@@ -101,7 +127,7 @@ int main() {
                 e.setNodeStack(lvl.grid.findPath(e.getCurrentGoal()));
             e.update(time);//easyEnemy update function
             if(player.getRect().intersects(e.getRect())) {
-                RandomQuestions(e.getType() == "m" ? m : p);
+                player.damage(RandomQuestions(e.getType() == "m" ? m : p));
                 e.setChecked();
                 clock.restart();
             }
@@ -116,6 +142,23 @@ int main() {
         window.draw(*player.getSprite());
         for(auto & e : enemies) {
             window.draw(*e.getSprite());
+        }
+
+        for(auto c = crystals.begin(); c < crystals.end(); c++) {
+            window.draw(*(*c)->getSprite());
+
+            if(player.getRect().intersects((*c)->getRect())) {
+                delete *c;
+                crystals.erase(c);
+                player.incrementScore();
+                clock.restart();
+            }
+        }
+
+        for(int i = 0; i < player.getHealth(); i++) {
+            Sprite heartSprite(*contentManager.getTexture("heart"));
+            heartSprite.setPosition(view.getCenter() - (Vector2f) (window.getSize() / 2u) + Vector2f(20 + i * 35, 20));
+            window.draw(heartSprite);
         }
         window.display();
     }

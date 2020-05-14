@@ -11,12 +11,25 @@
 
 class Player : public Entity {
 private:
+    int health;
     enum { left, right, up, down, jump, stay } state;//��������� ��� ������������ - ��������� �������
     int playerScore;
 public:
     Player(sf::Texture * texture, const sf::String& name, sf::Vector2f position, sf::Vector2f size, Level &level);
     void control();
     void update(float dt) override;
+    int getHealth();
+    ///@returns true if health >= 0
+    bool isAlive();
+    /**
+     * Subtracts damage from health
+     * @param damage subtrahend from health
+     */
+    void damage(int damage);
+    ///Increments playerScore by 1
+    void incrementScore();
+    ///@returns playerScore
+    int getScore();
 };
 
 

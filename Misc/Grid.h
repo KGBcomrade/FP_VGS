@@ -44,6 +44,11 @@ public:
      * @return true if position is different from previous one
      */
     bool setPlayerPosition(sf::Vector2f position);
+    /**
+     * Finds shortest way to player from start position
+     * @param position start position
+     * @return stack of waypoints which lead to player's position
+     */
     std::stack<sf::Vector2f> findPath(sf::Vector2f position);
 };
 

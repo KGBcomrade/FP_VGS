@@ -16,9 +16,8 @@ protected:
     std::vector<Object*> obj;
     sf::Vector2f position, velocity, size;
 
-    float speed, moveTimer;
+    float speed;
     int health;
-    bool life, isMove, onGround;
     sf::Sprite *sprite;
     sf::String name;
 public:

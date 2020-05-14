@@ -54,7 +54,29 @@ void Player::update(float dt){
 
 Player::Player(sf::Texture *texture, const sf::String &name, sf::Vector2f position, sf::Vector2f size, Level &level) : Entity::Entity(texture, name, position, size, level){
     playerScore = 0;
+    health = 3;
+    state = stay;
     if(name == "Player1")
         sprite->setTextureRect(sf::IntRect(4, 19, size.x, size.y));
+}
+
+int Player::getHealth() {
+    return health;
+}
+
+bool Player::isAlive() {
+    return health > 0;
+}
+
+void Player::damage(int damage) {
+    health -= damage;
+}
+
+void Player::incrementScore() {
+    playerScore++;
+}
+
+int Player::getScore() {
+    return playerScore;
 }
 
