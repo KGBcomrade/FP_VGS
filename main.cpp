@@ -112,15 +112,18 @@ int main() {
 
 
     while(window.isOpen()) {
+        //get delta time
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
         time = time / 800;
+        //window closure
         Event event{};
         while(window.pollEvent(event)) {
             if(event.type == Event::Closed)
                 window.close();
         }
 
+        //game result
         if(!player.isAlive()) {
             window.close();
             std::cout << "You lose!" << std::endl;
@@ -133,14 +136,17 @@ int main() {
             break;
         }
 
+        //update
         player.update(time);// Player update function
         bool updatePaths = lvl.grid.setPlayerPosition(player.getPosition());
         for(auto &e : enemies) {
             if(e.isChecked())
                 continue;
+            //Update enemy path to player
             if(updatePaths && e.isTriggered())
                 e.setNodeStack(lvl.grid.findPath(e.getCurrentGoal()));
             e.update(time);//easyEnemy update function
+            //check player contact
             if(player.getRect().intersects(e.getRect())) {
                 player.damage(RandomQuestions(e.getType() == "m" ? m : p));
                 e.setChecked();
@@ -148,9 +154,20 @@ int main() {
             }
         }
 
+        //crystal collect
+        for(auto c = crystals.begin(); c < crystals.end(); c++) {
+            if(player.getRect().intersects((*c)->getRect())) {
+                delete *c;
+                crystals.erase(c);
+                player.incrementScore();
+                player.heal();
+            }
+        }
+
+
+        //draw map
         view.setCenter(player.getPosition());
         view.setSize((Vector2f) window.getSize());
-//        view.zoom(.5);
         window.setView(view);
         window.clear();
         lvl.draw(window);
@@ -158,16 +175,9 @@ int main() {
         for(auto & e : enemies) {
             window.draw(*e.getSprite());
         }
+        for(auto &c : crystals)
+            window.draw(*c->getSprite());
 
-        for(auto c = crystals.begin(); c < crystals.end(); c++) {
-            window.draw(*(*c)->getSprite());
-
-            if(player.getRect().intersects((*c)->getRect())) {
-                delete *c;
-                crystals.erase(c);
-                player.incrementScore();
-            }
-        }
 
 
         crystalSprite.setPosition(view.getCenter() - (Vector2f)(window.getSize() / 2u) + Vector2f(20, 60));

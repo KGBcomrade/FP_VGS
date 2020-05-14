@@ -11,7 +11,7 @@
 
 class Player : public Entity {
 private:
-    int health;
+    int health, maxHealth;
     enum { left, right, up, down, jump, stay } state;//��������� ��� ������������ - ��������� �������
     int playerScore;
 public:
@@ -26,6 +26,8 @@ public:
      * @param damage subtrahend from health
      */
     void damage(int damage);
+    ///increments player health by 1 if it's less then max
+    void heal();
     ///Increments playerScore by 1
     void incrementScore();
     ///@returns playerScore
