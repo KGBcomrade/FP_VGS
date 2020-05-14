@@ -1,4 +1,3 @@
-
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <Misc/Level.h>
 #include <Utils/ContentManager.h>
@@ -46,6 +45,11 @@ int main() {
     contentManager.loadTexture("heart", "heart.png");
     contentManager.loadTexture("crystal", "crystal.png");
 
+    sf::Font font;
+
+    if(!font.loadFromFile("CyrilicOld.TTF"))
+        return 1;
+
     std::map<std::string, int> m = {
             {"Чему равен объем тетраэдра с площадью основания 6 и высотой 4 ", 8 },
             {"cos(60)*tg(45)/(sin(30)^2", 2},
@@ -72,7 +76,7 @@ int main() {
             { "Во сколько раз изменится длина волны света при переходе из среды с показателем преломления n = 2 в вакуум?", 2 }
     };
 
-
+    //map init
     Level lvl("map3.tmx");
     Sprite mapSprite = Sprite(*contentManager.getTexture("mapTexture"));
     auto *playerObj = lvl.getObject("player");
@@ -95,6 +99,18 @@ int main() {
     lvl.grid.setPlayerPosition(player.getPosition());
     for(auto &i : enemies)
         i.setNodeStack(lvl.grid.findPath(i.getPosition()));
+
+    //interface elements
+    sf::Sprite crystalSprite(*contentManager.getTexture("crystal"));
+    crystalSprite.scale(1.3, 1.3);
+
+    sf::Text scoreDisplay;
+    scoreDisplay.setFont(font);
+    scoreDisplay.setCharacterSize(26);
+    scoreDisplay.setStyle(sf::Text::Regular);
+    scoreDisplay.setOutlineColor(sf::Color::Black);
+    scoreDisplay.setOutlineThickness(.8);
+    scoreDisplay.setFillColor(sf::Color::White);
 
     while(window.isOpen()) {
         float time = clock.getElapsedTime().asMicroseconds();
@@ -155,11 +171,21 @@ int main() {
             }
         }
 
+
+        crystalSprite.setPosition(view.getCenter() - (Vector2f)(window.getSize() / 2u) + Vector2f(20, 60));
+        window.draw(crystalSprite);
+
+        scoreDisplay.setString(std::to_string(player.getScore()) + "/" + std::to_string(maxScore));
+        scoreDisplay.setPosition(view.getCenter() - (Vector2f) (window.getSize() / 2u) + Vector2f(50, 60));
+        window.draw(scoreDisplay);
+
+
         for(int i = 0; i < player.getHealth(); i++) {
             Sprite heartSprite(*contentManager.getTexture("heart"));
             heartSprite.setPosition(view.getCenter() - (Vector2f) (window.getSize() / 2u) + Vector2f(20 + i * 35, 20));
             window.draw(heartSprite);
         }
+
         window.display();
     }
 }
